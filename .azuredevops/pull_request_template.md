@@ -1,4 +1,4 @@
-Thank you for your contribution to the **e2e-aspnetcore6** repo. 
+Thank you for your contribution to the **e2e-aspnetcore6** repository.
 
 ## Before submitting this PR, please make sure:
 
