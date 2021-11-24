@@ -18,6 +18,7 @@ jobs:
   variables:
     DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true' # perf improvement on hosted agents
     projectsToBuild:        'Application/**/*.csproj'
+    projectsToTest:         'Application/**/*Tests/*.csproj'
     sdkVersion:             '6.0.100'
 
   steps:
@@ -46,6 +47,20 @@ jobs:
       command: build
       projects: '$(projectsToBuild)'
       arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore' # Update this to match your need
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet test'
+    inputs:
+      command: test
+      projects: '$(projectsToTest)'
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore --no-build --filter TestCategory!=UI'
+      # ${{ if eq(variables['agent.os'], 'windows_nt') }}: # only for Windows
+      #   arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore --no-build --filter TestCategory!=UI ---collect "Code coverage"'
+      # ${{ if ne(variables['agent.os'], 'windows_nt') }}: # not on Windows
+      #   arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore --no-build --filter TestCategory!=UI --settings $(Build.SourcesDirectory)/Application/aspnet-core-sample.UnitTests/CodeCoverage.runsettings --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+      publishTestResults: true
+      testRunTitle: 'Unit Tests'
 
   # Publish: WebApp
   - task: DotNetCoreCLI@2
