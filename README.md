@@ -4,4 +4,4 @@
 
 This is a sample project, created for training and demonstration purposes only. 
 
-For a complete list of features, see this project's [wiki pages](https://dev.azure.com/nenoALM/E2E/_wiki/wikis/e2e-aspnetcore6.Docs).
+For a complete list of features, see the [docs folder](Docs/Overview.md).
