@@ -3,8 +3,11 @@
 # Author      : Neno Loje
 
 parameters:
-  jobName: 'BuildWebApp'
-  buildConfiguration: 'Release'
+- name: BuildWebApp
+  type: string  
+- name: buildConfiguration
+  type: string
+  default: 'Release'
 
 jobs:
 - job: ${{ parameters.jobName }}
