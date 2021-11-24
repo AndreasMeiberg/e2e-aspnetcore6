@@ -11,6 +11,7 @@ jobs:
   displayName: 'Build ASP.NET Core app'
   pool:
     vmImage: ubuntu-latest
+  container: mcr.microsoft.com/dotnet/sdk:6.0
   variables:
     DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true' # perf improvement on hosted agents
     projectsToBuild:        'Application/**/*.csproj'
