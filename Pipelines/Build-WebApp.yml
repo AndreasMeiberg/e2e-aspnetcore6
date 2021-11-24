@@ -6,6 +6,7 @@ parameters:
   jobName: 'BuildWebApp'
   buildConfiguration: 'Release'
 
+jobs:
 - job: ${{ parameters.jobName }}
   displayName: 'Build ASP.NET Core app'
   pool:
