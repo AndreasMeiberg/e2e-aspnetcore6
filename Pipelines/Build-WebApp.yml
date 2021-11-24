@@ -3,7 +3,7 @@
 # Author      : Neno Loje
 
 parameters:
-- name: BuildWebApp
+- name: jobName
   type: string  
 - name: buildConfiguration
   type: string
