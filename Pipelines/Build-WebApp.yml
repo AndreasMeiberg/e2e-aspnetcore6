@@ -1,0 +1,57 @@
+# File        : Build-WebApp.yml
+# Description : Contains a job that builds the ASP .NET Core 3.1 web app.
+# Author      : Neno Loje
+
+parameters:
+  jobName: 'BuildWebApp'
+  buildConfiguration: 'Release'
+
+- job: ${{ parameters.jobName }}
+  displayName: 'Build ASP.NET Core app'
+  pool:
+    vmImage: ubuntu-latest
+  variables:
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true' # perf improvement on hosted agents
+    projectsToBuild:        'Application/**/*.csproj'
+    sdkVersion:             '6.0.100'
+
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer?view=azure-devops
+  - task: UseDotNet@2
+    displayName: 'Install .NET Core SDK $(sdkVersion)'
+    inputs:
+      version: $(sdkVersion)
+      packageType: sdk
+      #performMultiLevelLookup: true # to use installed .NET Core runtime
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore'
+    inputs:
+      command: 'restore'
+      projects: '$(projectsToBuild)'
+      feedsToUse: 'select'
+      vstsFeed: 'f3d2d824-8fba-4de4-ae0e-9b8c845be4f3'
+      includeNuGetOrg: false
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+      command: build
+      projects: '$(projectsToBuild)'
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore' # Update this to match your need
+
+  # Publish: WebApp
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet publish'
+    inputs:
+      command: publish
+      projects: '$(projectsToBuild)'
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --output $(Build.StagingDirectory)/WebApp --no-restore --no-build'
+      publishWebProjects: false
+      zipAfterPublish: true
+      modifyOutputPath: false
+
+  - publish: $(Build.StagingDirectory)/WebApp
+    displayName: 'Publish artifact: WebApp'
+    artifact: WebApp
