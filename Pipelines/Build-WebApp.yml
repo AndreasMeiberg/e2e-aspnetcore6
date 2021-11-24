@@ -16,7 +16,8 @@ jobs:
     projectsToBuild:        'Application/**/*.csproj'
     sdkVersion:             '6.0.100'
 
-# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer?view=azure-devops
+  steps:
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer?view=azure-devops
   - task: UseDotNet@2
     displayName: 'Install .NET Core SDK $(sdkVersion)'
     inputs:
