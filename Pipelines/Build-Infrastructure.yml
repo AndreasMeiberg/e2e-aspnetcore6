@@ -29,9 +29,13 @@ jobs:
 
   steps:
 
-  - script: bicep build Main.bicep --outfile $(armTemplate)
+  - script: az bicep build --file Main.bicep --outfile $(armTemplate)
     displayName: 'bicep build'
     workingDirectory: $(Build.SourcesDirectory)/Infrastructure
+
+  # - script: bicep build Main.bicep --outfile $(armTemplate)
+  #   displayName: 'bicep build'
+  #   workingDirectory: $(Build.SourcesDirectory)/Infrastructure
 
   - task: AzureCLI@2
     displayName: 'az deployment group validate'
