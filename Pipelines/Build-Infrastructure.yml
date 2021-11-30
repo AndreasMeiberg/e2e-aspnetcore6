@@ -8,6 +8,9 @@ parameters:
 - name: buildConfiguration
   type: string
   default: 'Release'
+- name: azureSubscription
+  type: string
+  default: 'Azure Subscription'
 
 jobs:
 - job: ${{ parameters.jobName }}
@@ -17,7 +20,6 @@ jobs:
   container: mcr.microsoft.com/dotnet/sdk:6.0
 
   variables:
-    azSub:          'Azure Subscription'
     azRegion:       'North Europe'
     rgName:         'demo-e2e-dev'
     armTemplate:    '$(Build.StagingDirectory)/azuredeploy.json'
@@ -34,7 +36,7 @@ jobs:
   - task: AzureCLI@2
     displayName: 'az deployment group validate'
     inputs:
-      azureSubscription: $(azSub)
+      azureSubscription: ${{ azureSubscription }}
       scriptType: pscore
       scriptLocation: inlineScript
       inlineScript: >
