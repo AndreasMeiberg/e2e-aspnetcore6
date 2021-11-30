@@ -22,6 +22,7 @@ jobs:
   variables:
     azRegion:       'North Europe'
     rgName:         'demo-e2e-dev'
+    bicepFile:      'Infrastructure/Main.bicep'
     armTemplate:    '$(Build.StagingDirectory)/azuredeploy.json'
     deploymentName: '$(Build.DefinitionName)-$(Build.BuildId)'
     deploymentMode: 'Complete'
@@ -36,8 +37,7 @@ jobs:
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        'az bicep build --file Main.bicep --outfile $(armTemplate)'
-      workingDirectory: $(Build.SourcesDirectory)/Infrastructure
+        az bicep build --file $(bicepFile) --outfile $(armTemplate)
 
   # - script: bicep build Main.bicep --outfile $(armTemplate)
   #   displayName: 'bicep build'
