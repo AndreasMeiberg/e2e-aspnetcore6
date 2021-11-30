@@ -22,13 +22,14 @@ jobs:
     sdkVersion:             '6.0.100'
 
   steps:
+  # When not running in container, uncomment the following:
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer?view=azure-devops
-  - task: UseDotNet@2
-    displayName: 'Install .NET Core SDK $(sdkVersion)'
-    inputs:
-      version: $(sdkVersion)
-      packageType: sdk
-      performMultiLevelLookup: true # to use installed .NET Core runtime
+  # - task: UseDotNet@2
+  #   displayName: 'Install .NET Core SDK $(sdkVersion)'
+  #   inputs:
+  #     version: $(sdkVersion)
+  #     packageType: sdk
+  #     #performMultiLevelLookup: true # to use installed .NET Core runtime
 
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli
   - task: DotNetCoreCLI@2
