@@ -1,6 +1,6 @@
 ## Overview of features
 
-- :white_check_mark: Build ASP .NET Core 6 web app, incl. [unit tests][unit-tests]
+- :white_check_mark: Build ASP .NET 6 web app, incl. [unit tests][unit-tests]
 - :white_check_mark: Automated build using the [.NET SDK Docker container][container]
 - :white_check_mark: Secret scanning using [Gitleaks][gitleaks] :warning: TODO: NEEDS TESTING
 - :white_check_mark: [Pull Request templates][pr-template] (Git)
