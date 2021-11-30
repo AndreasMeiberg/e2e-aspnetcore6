@@ -43,20 +43,20 @@ jobs:
   #   displayName: 'bicep build'
   #   workingDirectory: $(Build.SourcesDirectory)/Infrastructure
 
-  - task: AzureCLI@2
-    displayName: 'az deployment group validate'
-    inputs:
-      azureSubscription: ${{ parameters.azureSubscription }}
-      scriptType: pscore
-      scriptLocation: inlineScript
-      inlineScript: >
-        az deployment group validate
-        --resource-group $(rgName)
-        --template-file $(armTemplate)
-        --mode $(deploymentMode)
-        --name $(deploymentName)
-        --output table
-        --parameters appName=$(webAppName)
+  # - task: AzureCLI@2
+  #   displayName: 'az deployment group validate'
+  #   inputs:
+  #     azureSubscription: ${{ parameters.azureSubscription }}
+  #     scriptType: pscore
+  #     scriptLocation: inlineScript
+  #     inlineScript: >
+  #       az deployment group validate
+  #       --resource-group $(rgName)
+  #       --template-file $(armTemplate)
+  #       --mode $(deploymentMode)
+  #       --name $(deploymentName)
+  #       --output table
+  #       --parameters appName=$(webAppName)
       # Alternative: --parameters @Configuration/settings.json
 
   - publish: $(Build.StagingDirectory)
