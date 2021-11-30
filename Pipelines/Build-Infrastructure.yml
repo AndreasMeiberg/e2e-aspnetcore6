@@ -36,7 +36,7 @@ jobs:
   - task: AzureCLI@2
     displayName: 'az deployment group validate'
     inputs:
-      azureSubscription: ${{ azureSubscription }}
+      azureSubscription: ${{ parameters.azureSubscription }}
       scriptType: pscore
       scriptLocation: inlineScript
       inlineScript: >
