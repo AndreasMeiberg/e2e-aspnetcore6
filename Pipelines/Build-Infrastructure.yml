@@ -30,7 +30,7 @@ jobs:
   steps:
 
   - task: AzureCLI@2
-    displayName: 'bicep build'
+    displayName: 'az bicep build'
     inputs:
       azureSubscription: 'Azure Subscription'
       scriptType: 'pscore'
