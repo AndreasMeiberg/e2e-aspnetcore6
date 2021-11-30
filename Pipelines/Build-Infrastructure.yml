@@ -16,7 +16,8 @@ jobs:
 - job: ${{ parameters.jobName }}
   displayName: 'Build Infrastructure'
   pool:
-    vmImage: mcr.microsoft.com/azure-cli:2.30.0
+    vmImage: ubuntu-latest
+  container: mcr.microsoft.com/azure-cli:2.30.0
 
   variables:
     azRegion:       'North Europe'
