@@ -21,3 +21,7 @@ jobs:
   parameters:
     jobName: BuildWebApp
     buildConfiguration: $(buildConfiguration)
+
+- template: Build-Infrastructure.yml
+  parameters:
+    jobName: BuildInfra

@@ -1,0 +1,52 @@
+# File        : Build-Infrastructure.yml
+# Description : Contains a job that builds the Azure Bicep files to ARM templates (JSON).
+# Author      : Neno Loje
+
+parameters:
+- name: jobName
+  type: string  
+- name: buildConfiguration
+  type: string
+  default: 'Release'
+
+jobs:
+- job: ${{ parameters.jobName }}
+  displayName: 'Build Infrastructure'
+  pool:
+    vmImage: ubuntu-latest
+  container: mcr.microsoft.com/dotnet/sdk:6.0
+
+  variables:
+    azSub:          'Azure Subscription'
+    azRegion:       'North Europe'
+    rgName:         'demo-e2e-dev'
+    armTemplate:    '$(Build.StagingDirectory)/azuredeploy.json'
+    deploymentName: '$(Build.DefinitionName)-$(Build.BuildId)'
+    deploymentMode: 'Complete'
+    webAppName:     'e2e-dev'
+
+  steps:
+
+  - script: bicep build Main.bicep --outfile $(armTemplate)
+    displayName: 'bicep build'
+    workingDirectory: $(Build.SourcesDirectory)/Infrastructure
+
+- task: AzureCLI@2
+  displayName: 'az deployment group validate'
+  inputs:
+    azureSubscription: $(azSub)
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: >
+      az deployment group validate
+      --resource-group $(rgName)
+      --template-file $(armTemplate)
+      --mode $(deploymentMode)
+      --name $(deploymentName)
+      --output table
+      --parameters appName=$(webAppName)
+    # Alternative: --parameters @Configuration/settings.json
+
+  - publish: $(Build.StagingDirectory)
+    displayName: 'publish: ARM-Template'
+    artifact: ARM-Template
