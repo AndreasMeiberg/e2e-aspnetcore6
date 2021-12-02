@@ -45,5 +45,6 @@ resource webAppPortalName 'Microsoft.Web/sites@2020-06-01' = {
       linuxFxVersion: linuxFxVersion
       alwaysOn: alwaysOn
     }
+    httpsOnly: true
   }
 }
