@@ -65,7 +65,7 @@ jobs:
         --no-build
         --filter TestCategory!=UI
         --collect:"XPlat Code Coverage"
-        -- RunConfiguration.DisableAppDomain=true'
+        -- RunConfiguration.DisableAppDomain=true
       # --settings $(Build.SourcesDirectory)/Application/aspnet-core-sample.UnitTests/CodeCoverage.runsettings
       publishTestResults: true
       testRunTitle: 'Unit Tests'
