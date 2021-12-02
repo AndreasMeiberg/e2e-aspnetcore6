@@ -99,7 +99,7 @@ jobs:
           displayName: 'Swap Slots'
           name: SlotSwap
           inputs:
-            azureSubscription:  ${{ parameters.azureConnection }}
+            azureSubscription:  ${{ parameters.azureSubscription }}
             ResourceGroupName:  $(Azure.ResourceGroup)
             Action:             Swap Slots
             WebAppName:         $(Azure.WebAppName)
