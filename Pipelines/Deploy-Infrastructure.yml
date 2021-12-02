@@ -37,7 +37,7 @@ jobs:
       resourceGroupName:  $(Azure.ResourceGroup)
       location:           $(Azure.Region)
       templateLocation:   Linked artifact
-      csmFile:            $(Pipeline.Workspace)/CI/ArmTemplates/azure-deploy.json
+      csmFile:            $(Pipeline.Workspace)/CI/ArmTemplate/azure-deploy.json
       overrideParameters: >-
         appName=${{ variables['Azure.WebAppName'] }}
       #  -webAppName "$(Azure.WebAppName)"
