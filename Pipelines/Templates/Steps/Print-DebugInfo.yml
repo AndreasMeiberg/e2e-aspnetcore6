@@ -7,7 +7,7 @@
 steps:
 - script: printenv 
   displayName: 'Debug: environment variables (Linux)'
-  condition: and( eq( variables['System.Debug'], true ), ne( variables['agent.os'], 'windows_nt' ) )
+  condition: and( eq( variables['System.Debug'], true ), ne( variables['agent.os'], 'Windows_NT' ) )
 - script: set 
   displayName: 'Debug: environment variables (Windows)'
-  condition: and( eq( variables['System.Debug'], true ), eq( variables['agent.os'], 'windows_nt' ) )
+  condition: and( eq( variables['System.Debug'], true ), eq( variables['agent.os'], 'Windows_NT' ) )
