@@ -49,7 +49,7 @@ jobs:
       csmFile:                        '$(armTemplateFile)'
       deploymentMode:                 'Complete'
       overrideParameters: >-
-        -appName ${{ variables['Azure.WebAppName'] }}
+        -appName "${{ variables['Azure.WebAppName'] }}"
 
 # # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-resource-group-deployment
 #   - task: AzureResourceGroupDeployment@2
