@@ -4,3 +4,4 @@ variables:
   Azure.WebAppName:      'e2e-app-test'
   Azure.SlotName:        'staging'
   EnvironmentName:       'e2e-aspnetcore6-test'
+  SomeSetting:           'Value for TEST env (defined in YAML)'
