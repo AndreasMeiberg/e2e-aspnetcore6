@@ -106,7 +106,7 @@ jobs:
             sourceSlot:         $(Azure.SlotName)
             swapWithProduction: true
 
-        - script: printenv 'Kommt SlotSwap darin vor?'
+        - script: printenv #'Kommt SlotSwap darin vor?'
 
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#powershell
         - powershell: |
