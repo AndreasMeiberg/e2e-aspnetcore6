@@ -19,7 +19,10 @@ module webApp './Modules/BasicLinuxWebApp.bicep' = {
     webAppName: webAppName
     sku: 'S1'
     location: location
-    linuxFxVersion: 'DOTNET|6.0'
+    linuxFxVersion: 'DOTNETCORE|6.0'
     clientAffinityEnabled: false
+    alwaysOn: true
   }
 }
+
+output slotDefaultHostname string = webApp.outputs.defaultHostname

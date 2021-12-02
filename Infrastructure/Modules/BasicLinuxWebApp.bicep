@@ -34,7 +34,7 @@ resource appServicePlanName 'Microsoft.Web/serverfarms@2020-06-01' = {
   }
 }
 
-resource webAppPortalName 'Microsoft.Web/sites@2020-06-01' = {
+resource webApp 'Microsoft.Web/sites@2020-06-01' = {
   name: webAppPortalName_var
   location: location
   kind: 'app,linux'
@@ -48,3 +48,5 @@ resource webAppPortalName 'Microsoft.Web/sites@2020-06-01' = {
     httpsOnly: true
   }
 }
+
+output defaultHostname string = webApp.properties.defaultHostName
