@@ -20,7 +20,7 @@ jobs:
   dependsOn: ${{ parameters.jobName }}
 
   pool:
-    vmImage:ubuntu-latest
+    vmImage: ubuntu-latest
 
   environment: ${{ parameters.environmentName }} # Creates an environment if it doesn't exist (for production use, create the environment manually)
 
