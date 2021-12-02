@@ -12,9 +12,12 @@ parameters:
 
 jobs:
 - job: ${{ parameters.jobName }}
+
   variables:
-  - template:         Config/Stage-Test.yml
-  - armTemplateFile:  $(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json
+  - template: Config/Stage-Test.yml
+  - name: armTemplateFile
+    value: '$(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json'
+
   steps:
   - checkout: none
 
