@@ -9,7 +9,7 @@ parameters:
   type: string
 
 steps:
-- pwsh: |
+- powershell: |
     $fileName = ${{ parameters.filename }}
     if (!$fileName)
     {
