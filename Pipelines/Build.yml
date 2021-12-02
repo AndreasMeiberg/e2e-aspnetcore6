@@ -1,6 +1,5 @@
 # File        : Build.yml
 # Description : This is the main build pipeline file for this project.
-# Author      : Neno Loje
 
 trigger:
   batch: true
