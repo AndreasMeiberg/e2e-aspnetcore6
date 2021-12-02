@@ -1,4 +1,4 @@
-# File: Deploy-AzureWebApp.yml
+# File: Deploy-WebApp.yml
 
 # Description : This job template describes a deployment of an Azure web app.
 # Author      : Neno Loje
@@ -11,7 +11,7 @@ parameters:
   type: string
 - name: environmentName
   type: string
-- name: azureConnection
+- name: azureSubscription
   type: string
 
 jobs:
@@ -59,10 +59,10 @@ jobs:
 
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-rm-web-app
         - task: AzureWebApp@1
-          displayName: 'Deploy web app: $(Azure.WebAppName) to staging slot'
+          displayName: 'Deploy web app: $(Azure.WebAppName)' #' to staging slot'
           name: WebAppDeploy
           inputs:
-            azureSubscription: ${{ parameters.azureConnection }}
+            azureSubscription: ${{ parameters.azureSubscription }}
             appType:           webApp
             appName:           $(Azure.WebAppName)
             package:           $(Pipeline.Workspace)/CI/WebApp/WebApp.zip
