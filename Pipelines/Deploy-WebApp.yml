@@ -1,0 +1,90 @@
+# File: Deploy-AzureWebApp.yml
+
+# Description : This job template describes a deployment of an Azure web app.
+# Author      : Neno Loje
+# Created     : February 22, 2020
+
+parameters:
+- name: jobName
+  type: string
+- name: dependsOn
+  type: string
+- name: environmentName
+  type: string
+- name: azureConnection
+  type: string
+
+jobs:
+- deployment: ${{ parameters.jobName }}
+  displayName: 'Deploy Web app'
+  dependsOn: ${{ parameters.jobName }}
+
+  pool:
+    vmImage:ubuntu-latest
+
+  environment: ${{ parameters.environmentName }} # Creates an environment if it doesn't exist (for production use, create the environment manually)
+
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        # Stop artifacts from being downloaded automatically
+        - download: none
+
+        - template: Templates/Steps/Print-DebugInfo.yml
+
+        - script: set RESOURCES_PIPELINE_CI
+          displayName: 'Debug info: CI pipeline variables'
+
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#pwsh
+#        - pwsh: |
+#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.Environment;]$(System.StageDisplayName)"
+#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.Branch;]$(Build.SourceBranch)"
+#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.ReleaseDate;]$([DateTime]::UtcNow.ToString('u'))"
+#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.BuildNumber;]$(Resources.Pipeline.CI.Runname)"
+#          displayName: "Set variables"
+
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema#download
+        - download: CI
+          displayName: 'Download artifact: WebApp'
+          artifact: WebApp
+
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/file-transform
+        - task: FileTransform@1
+          displayName: 'File transform: appsettings.json'
+          inputs:
+            targetFiles: appsettings.json
+            folderPath:  $(Pipeline.Workspace)/CI/WebApp/WebApp.zip
+            fileType:    json
+
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-rm-web-app
+        - task: AzureWebApp@1
+          displayName: 'Deploy web app: $(Azure.WebAppName) to staging slot'
+          name: WebAppDeploy
+          inputs:
+            azureSubscription: ${{ parameters.azureConnection }}
+            appType:           webApp
+            appName:           $(Azure.WebAppName)
+            package:           $(Pipeline.Workspace)/CI/WebApp/WebApp.zip
+            appSettings:       >
+              -ASPNETCORE_ENVIRONMENT "Development"
+              -WEBSITE_TIME_ZONE "W. Europe Standard Time"
+            # see full list at: https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-vista/cc749073(v=ws.10)
+            deploymentMethod:  runFromPackage
+            #deployToSlotOrASE: true
+            #slotName:          $(Azure.SlotName)
+            resourceGroupName: $(Azure.ResourceGroup)
+          #outputs:
+          #  AppServiceApplicationUrl (reference it by $(WebAppDeploy.AppServiceApplicationUrl) or  %WEBAPPDEPLOY_APPSERVICEAPPLICATIONUR%)
+
+          # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#script
+        - script: |
+            echo URL=$(WebAppDeploy.AppServiceApplicationUrl)
+          displayName: 'Print output variable'
+
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#pwsh
+        #- pwsh: './SmokeTest.ps1 -url $(WebAppDeploy.AppServiceApplicationUrl)'
+        #  displayName: 'Check web app response'
+        #  workingDirectory: '$(Pipeline.Workspace)/CI/DeployScripts'
+        #  failOnStderr: true
+        #  retryCountOnTaskFailure: 3
