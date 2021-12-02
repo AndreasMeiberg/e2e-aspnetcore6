@@ -1,0 +1,21 @@
+# File        : Deploy.yml
+# Description : This is our main deployment pipeline.
+
+trigger: none
+
+resources:
+  pipelines:
+  - pipeline: CI
+    source: e2e-aspnetcore6.Build
+    trigger:
+      branches:
+        include:
+        - main
+
+stages:
+- stage: TEST
+  jobs:
+  - job: Deploy-Infrastructure.yml
+    steps:
+    - template: Deploy-Infrastructure.yml
+
