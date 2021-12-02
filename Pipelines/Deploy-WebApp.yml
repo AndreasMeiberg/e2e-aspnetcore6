@@ -80,7 +80,7 @@ jobs:
 
           # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#script
         - script: |
-            echo URL=$(WebAppDeploy.AppServiceApplicationUrl)
+            echo WebAppDeploy.AppServiceApplicationUrl=$(WebAppDeploy.AppServiceApplicationUrl)
           displayName: 'Print output variable'
 
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#pwsh
