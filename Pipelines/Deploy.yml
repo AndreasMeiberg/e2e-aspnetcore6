@@ -16,21 +16,10 @@ variables:
 - template: Config/Pipeline-Global.yml
 
 stages:
-#--------------------------------------------------------------------------------
-- stage: TEST
+- template: Deploy-Stage-Template.yml
+  parameters:
+    stageName: Test
 
-  variables:
-  - template: Config/Stage-Test.yml
-
-  jobs:
-  - template: Deploy-Infrastructure.yml
-    parameters:
-      jobName: DeployInfra
-      azureSubscription: ${{ variables['Azure.Connection'] }}
-
-  - template: Deploy-WebApp.yml
-    parameters:
-      jobName: DeployWebApp
-      dependsOn: DeployInfra
-      environmentName: ${{ variables.EnvironmentName }}
-      azureSubscription: ${{ variables['Azure.Connection'] }}
+- template: Deploy-Stage-Template.yml
+  parameters:
+    stageName: Prod
