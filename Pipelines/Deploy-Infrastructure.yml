@@ -1,0 +1,56 @@
+# File: Deploy-Infrastructure.yml
+
+# Description : This job template describes a deployment to an Azure resource group.
+# Author      : Neno Loje
+# Created     : February 22, 2020
+
+parameters:
+- name: jobName
+  default: 'DeployJob'
+- name: environmentName
+- name: azureConnection
+
+jobs:
+- job: ${{ parameters.jobName }}
+  steps:
+  - checkout: none
+
+  # By default, files are downloaded to $(Pipeline.Workspace)/{pipeline}/{artifact}
+  - download: CI
+    displayName: 'Download artifact: ArmTemplates'
+    artifact: ArmTemplates
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/
+  - task: AzureCLI@2
+    displayName: 'Azure CLI: Create resource group'
+    inputs:
+      azureSubscription: ${{ parameters.azureConnection }}
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |
+        az group create --location "$(Azure.Region)" --name "$(Azure.ResourceGroup)" --tags dev.azure.com=nenoALM Environment=$(System.StageDisplayName) Project=$(System.TeamProject) Repo=$(Build.Repository.Name) Pipeline=$(System.DefinitionName)
+
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-resource-group-deployment
+  - task: AzureResourceGroupDeployment@2
+    displayName: 'Deploy Azure resources (complete mode)'
+    inputs:
+      azureSubscription:  ${{ parameters.azureConnection }}
+      action:             Create Or Update Resource Group
+      resourceGroupName:  $(Azure.ResourceGroup)
+      location:           $(Azure.Region)
+      templateLocation:   Linked artifact
+      csmFile:            $(Pipeline.Workspace)/CI/ArmTemplates/azure-deploy.json
+      overrideParameters: >-
+        appName=${{ variables['Azure.WebAppName'] }}
+      #  -webAppName "$(Azure.WebAppName)"
+      #  -hostingPlanName "$(Azure.WebAppName)-plan"
+      #  -appInsightsLocation "$(Azure.Region)"
+      #  -sku "$(Azure.WebAppPlanSKU)"
+      #  -slotName "$(Azure.SlotName)"
+      #  -databaseServerName "$(SQLAzure.ServerName)"
+      #  -databaseName "$(SQLAzure.DatabaseName)"
+      #  -databaseUsername "$(SQLAzure.Username)"
+      #  -databasePassword "$(SQLAzure.Password)"
+      #  -keyVaultName "$(Azure.KeyVaultName)"
+      #  -keyVaultObjectId "$(Azure.KeyVaultOwner)"
+    deploymentMode:     Complete
