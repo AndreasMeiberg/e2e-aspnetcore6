@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Code Coverage analysis helps to find gaps in the automated tests and highlights trends.
+Code coverage analysis helps to find gaps in the automated tests and highlights trends.
 
 ## Parts of the solution
 
