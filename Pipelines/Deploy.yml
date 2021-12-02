@@ -22,3 +22,10 @@ stages:
     parameters:
       jobName: DeployInfra
       azureConnection: 'Azure Subscription'
+
+  - template: Deploy-AzureWebApp.yml
+    parameters:
+      jobName: DeployWebApp
+      dependsOn: DeployInfra
+      environmentName: $(EnvironmentName)
+      azureConnection: 'Azure Subscription'
