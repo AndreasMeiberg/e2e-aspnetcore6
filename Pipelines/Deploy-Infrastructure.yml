@@ -22,15 +22,11 @@ jobs:
     displayName: 'Download artifact: ArmTemplate'
     artifact: ArmTemplate
 
-  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/
-  - task: AzureCLI@2
-    displayName: 'Azure CLI: Create resource group'
-    inputs:
+  - template: Templates/Steps/AzureCLI/Create-ResourceGroup.yml
+    parameters:
       azureSubscription: ${{ parameters.azureConnection }}
-      scriptType: pscore
-      scriptLocation: inlineScript
-      inlineScript: |
-        az group create --location "$(Azure.Region)" --name "$(Azure.ResourceGroup)" --tags dev.azure.com=nenoALM Environment=$(System.StageDisplayName) Project=$(System.TeamProject) Repo=$(Build.Repository.Name) Pipeline=$(System.DefinitionName)
+      name: $(Azure.ResourceGroup)
+      location: $(Azure.Region)
 
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-resource-group-deployment
   - task: AzureResourceGroupDeployment@2
