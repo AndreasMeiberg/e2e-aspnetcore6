@@ -9,12 +9,11 @@ trigger:
     - feature/*
     - topic/*
   paths:
-    include:
-    - Pipelines/DeployScripts/*
     exclude:
     - .azuredevops/*
     - Docs/*
-    - Pipelines/*
+    - Pipelines/*.yml
+    - Pipelines/Templates/*.yml
     - azurepipelines-coverage.yml
     - README.md
 
