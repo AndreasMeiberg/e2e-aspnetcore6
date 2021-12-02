@@ -1,5 +1,6 @@
 variables:
   Azure.Connection:      'Azure Subscription'
-  Azure.WebAppName:      'e2e-app-test'
   Azure.ResourceGroup:   'demo-e2e-app-test'
+  Azure.WebAppName:      'e2e-app-test'
+  Azure.SlotName:        'staging'
   EnvironmentName:       'e2e-aspnetcore6-test'
