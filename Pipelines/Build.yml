@@ -9,6 +9,8 @@ trigger:
     - feature/*
     - topic/*
   paths:
+    include:
+    - Pipelines/DeployScripts/*
     exclude:
     - .azuredevops/*
     - Docs/*
