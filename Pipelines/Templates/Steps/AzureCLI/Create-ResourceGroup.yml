@@ -21,7 +21,7 @@ steps:
       --output table
       --tags
       Organization=$(System.CollectionUri)
-      Environment=$(System.StageDisplayName)
+      Stage=$(System.StageDisplayName)
       Project=$(System.TeamProject)
       Repo=$(Build.Repository.Name)
       Pipeline=$(System.DefinitionName)
