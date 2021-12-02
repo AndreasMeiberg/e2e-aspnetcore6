@@ -1,8 +1,5 @@
-# File: Deploy-Infrastructure.yml
-
+# File        : Deploy-Infrastructure.yml
 # Description : This job template describes a deployment to an Azure resource group.
-# Author      : Neno Loje
-# Created     : February 22, 2020
 
 parameters:
 - name: jobName
