@@ -65,7 +65,7 @@ jobs:
             appName:           $(Azure.WebAppName)
             package:           $(Pipeline.Workspace)/CI/WebApp/WebApp.zip
             appSettings:       >
-              -ASPNETCORE_ENVIRONMENT "Development"
+              -ASPNETCORE_ENVIRONMENT "$(System.StageName)"
               -WEBSITE_TIME_ZONE "W. Europe Standard Time"
             # see full list at: https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-vista/cc749073(v=ws.10)
             deploymentMethod:  runFromPackage
