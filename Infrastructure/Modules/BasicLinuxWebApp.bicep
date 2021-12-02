@@ -13,6 +13,8 @@ param sku string = 'S1'
 @description('The Runtime stack of current web app')
 param linuxFxVersion string = 'php|7.4'
 
+param clientAffinityEnabled bool = true
+
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
@@ -36,6 +38,7 @@ resource webAppPortalName 'Microsoft.Web/sites@2020-06-01' = {
   location: location
   kind: 'app'
   properties: {
+    clientAffinityEnabled: clientAffinityEnabled
     serverFarmId: appServicePlanName.id
     siteConfig: {
       linuxFxVersion: linuxFxVersion

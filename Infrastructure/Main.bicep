@@ -20,5 +20,6 @@ module webApp './Modules/BasicLinuxWebApp.bicep' = {
     sku: 'S1'
     location: location
     linuxFxVersion: 'DOTNET|6.0'
+    clientAffinityEnabled: false
   }
 }
