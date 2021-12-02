@@ -37,11 +37,11 @@ jobs:
       name: $(Azure.ResourceGroup)
       location: $(Azure.Region)
 
+  # https://github.com/microsoft/azure-pipelines-tasks/tree/master/Tasks/AzureResourceManagerTemplateDeploymentV3
   - task: AzureResourceManagerTemplateDeployment@3
     inputs:
       deploymentScope:                'Resource Group'
       azureResourceManagerConnection: '${{ parameters.azureConnection }}'
-      #subscriptionId:                 '9b4b958c-bd31-4c60-a834-c4bb38488748'
       action:                         'Create Or Update Resource Group'
       resourceGroupName:              '$(Azure.ResourceGroup)'
       location:                       '$(Azure.Region)'
@@ -50,28 +50,3 @@ jobs:
       deploymentMode:                 'Complete'
       overrideParameters: >-
         -appName "${{ variables['Azure.WebAppName'] }}"
-
-# # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-resource-group-deployment
-#   - task: AzureResourceGroupDeployment@2
-#     displayName: 'Deploy Azure resources (complete mode)'
-#     inputs:
-#       azureSubscription:  ${{ parameters.azureConnection }}
-#       action:             Create Or Update Resource Group
-#       resourceGroupName:  $(Azure.ResourceGroup)
-#       location:           $(Azure.Region)
-#       templateLocation:   Linked artifact
-#       csmFile:            $(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json
-#       overrideParameters: >-
-#         -appName ${{ variables['Azure.WebAppName'] }}
-#       #  -webAppName "$(Azure.WebAppName)"
-#       #  -hostingPlanName "$(Azure.WebAppName)-plan"
-#       #  -appInsightsLocation "$(Azure.Region)"
-#       #  -sku "$(Azure.WebAppPlanSKU)"
-#       #  -slotName "$(Azure.SlotName)"
-#       #  -databaseServerName "$(SQLAzure.ServerName)"
-#       #  -databaseName "$(SQLAzure.DatabaseName)"
-#       #  -databaseUsername "$(SQLAzure.Username)"
-#       #  -databasePassword "$(SQLAzure.Password)"
-#       #  -keyVaultName "$(Azure.KeyVaultName)"
-#       #  -keyVaultObjectId "$(Azure.KeyVaultOwner)"
-#       deploymentMode:     Complete
