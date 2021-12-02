@@ -1,0 +1,26 @@
+parameters:
+- name: azureSubscription
+  type: string
+- name: location
+  type: string
+- name: name
+  type: string
+
+steps:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/
+- task: AzureCLI@2
+  displayName: 'Azure CLI: Create resource group'
+  inputs:
+    azureSubscription: ${{ parameters.azureSubscription }}
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: >
+      az group create
+      --location "${{ parameters.location }}"
+      --name "${{ parameters.name }}"
+      --tags
+      Organization=$(System.CollectionUri)
+      Environment=$(System.StageDisplayName)
+      Project=$(System.TeamProject)
+      Repo=$(Build.Repository.Name)
+      Pipeline=$(System.DefinitionName)
