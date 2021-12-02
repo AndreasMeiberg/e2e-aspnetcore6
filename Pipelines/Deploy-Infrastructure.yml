@@ -15,6 +15,8 @@ jobs:
   steps:
   - checkout: none
 
+  - template: Templates/Steps/Print-DebugInfo.yml
+
   # By default, files are downloaded to $(Pipeline.Workspace)/{pipeline}/{artifact}
   - download: CI
     displayName: 'Download artifact: ArmTemplates'
