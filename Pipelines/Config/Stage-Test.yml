@@ -1,4 +1,4 @@
 variables:
   Azure.Connection:      'Azure Subscription'
-  Azure.WebAppName:      'e2e-foo-bar-test'
+  Azure.WebAppName:      'e2e-app-test'
   Azure.ResourceGroup:   'demo-e2e-app-test'
