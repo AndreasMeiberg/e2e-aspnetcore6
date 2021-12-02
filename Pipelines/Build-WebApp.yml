@@ -103,3 +103,8 @@ jobs:
   - publish: $(Build.StagingDirectory)/WebApp
     displayName: 'Publish artifact: WebApp'
     artifact: WebApp
+
+# Publish: DeployScripts
+  - publish: $(Build.SourcesDirectory)/Pipelines/DeployScripts
+    displayName: 'Publish artifact: DeployScripts'
+    artifact: DeployScripts
