@@ -36,13 +36,13 @@ jobs:
         - script: set RESOURCES_PIPELINE_CI
           displayName: 'Debug info: CI pipeline variables'
 
-        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#pwsh
-#        - pwsh: |
-#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.Environment;]$(System.StageDisplayName)"
-#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.Branch;]$(Build.SourceBranch)"
-#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.ReleaseDate;]$([DateTime]::UtcNow.ToString('u'))"
-#            Write-Host "##vso[task.setvariable variable=DeploymentInfo.BuildNumber;]$(Resources.Pipeline.CI.Runname)"
-#          displayName: "Set variables"
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#powershell
+        - powershell: |
+            Write-Host "##vso[task.setvariable variable=DeploymentInfo.Environment;]$(System.StageDisplayName)"
+            Write-Host "##vso[task.setvariable variable=DeploymentInfo.Branch;]$(Build.SourceBranch)"
+            Write-Host "##vso[task.setvariable variable=DeploymentInfo.ReleaseDate;]$([DateTime]::UtcNow.ToString('u'))"
+            Write-Host "##vso[task.setvariable variable=DeploymentInfo.BuildNumber;]$(Resources.Pipeline.CI.Runname)"
+          displayName: "Set variables"
 
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema#download
         - download: CI
