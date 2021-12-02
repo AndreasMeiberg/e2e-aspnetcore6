@@ -6,7 +6,7 @@ stages:
 - stage: ${{ upper(parameters.stageName) }}
 
   variables:
-  - template: Config/Stage-${{ upper(parameters.stageName) }}.yml
+  - template: Config/Stage-${{ parameters.stageName }}.yml
 
   jobs:
   - template: Deploy-Infrastructure.yml
