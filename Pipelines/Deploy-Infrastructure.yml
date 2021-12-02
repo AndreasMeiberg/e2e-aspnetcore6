@@ -39,7 +39,7 @@ jobs:
       templateLocation:   Linked artifact
       csmFile:            $(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json
       overrideParameters: >-
-        appName=${{ variables['Azure.WebAppName'] }}
+        -appName ${{ variables['Azure.WebAppName'] }}
       #  -webAppName "$(Azure.WebAppName)"
       #  -hostingPlanName "$(Azure.WebAppName)-plan"
       #  -appInsightsLocation "$(Azure.Region)"
