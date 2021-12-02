@@ -12,6 +12,9 @@ resources:
         include:
         - main
 
+variables:
+- template: Config/Pipeline-Global.yml
+
 stages:
 - stage: TEST
   jobs:
