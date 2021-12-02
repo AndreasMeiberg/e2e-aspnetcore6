@@ -10,6 +10,8 @@ parameters:
 
 jobs:
 - job: ${{ parameters.jobName }}
+  variables:
+  - template: Config/Stage-Test.yml
   steps:
   - checkout: none
 
