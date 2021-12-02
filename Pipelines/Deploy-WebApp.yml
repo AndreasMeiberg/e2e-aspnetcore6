@@ -96,7 +96,7 @@ jobs:
 
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-app-service-manage
         - task: AzureAppServiceManage@0
-          displayName: 'Swap Slots'
+          displayName: 'Swap staging with production'
           name: SlotSwap
           inputs:
             azureSubscription:  ${{ parameters.azureSubscription }}
@@ -106,16 +106,9 @@ jobs:
             sourceSlot:         $(Azure.SlotName)
             swapWithProduction: true
 
-        - script: printenv #'Kommt SlotSwap darin vor?'
-
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#powershell
         - powershell: |
-            Write-Host "##vso[task.setvariable variable=SUT;]https://$(Azure.WebAppName).azurewebsites.net"
-          displayName: "Set variable"
-
-        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#powershell
-        - powershell: |
-            ./SmokeTest.ps1 -url $(SUT)
+            ./SmokeTest.ps1 -url https://$(Azure.WebAppName).azurewebsites.net
           displayName: 'Check HTTP status (production)'
           workingDirectory: '$(Pipeline.Workspace)/CI/DeployScripts'
           failOnStderr: true
