@@ -43,6 +43,7 @@ jobs:
 
   # https://github.com/microsoft/azure-pipelines-tasks/tree/master/Tasks/AzureResourceManagerTemplateDeploymentV3
   - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Deploy Azure resources (complete mode)'
     inputs:
       deploymentScope:                'Resource Group'
       azureResourceManagerConnection: '${{ parameters.azureConnection }}'
