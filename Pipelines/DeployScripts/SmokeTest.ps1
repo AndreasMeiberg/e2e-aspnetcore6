@@ -21,7 +21,7 @@ catch
 }
 
 # Let's check the response and look for something meaningful
-$titleCheck = $response.Content.Contains("ASP.NET Core sample</title>")
+$titleCheck = $response.Content.Contains("ASP.NET Core Sample</title>")
 
 if ($titleCheck -eq $true)
 {
