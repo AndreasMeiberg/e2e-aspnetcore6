@@ -1,6 +1,5 @@
 # File        : Build-WebApp.yml
 # Description : Contains a job that builds the ASP .NET 6 web app.
-# Author      : Neno Loje
 
 parameters:
 - name: jobName
