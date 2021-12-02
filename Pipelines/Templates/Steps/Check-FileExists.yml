@@ -10,7 +10,7 @@ parameters:
 
 steps:
 - powershell: |
-    $fileName = ${{ parameters.filename }}
+    $fileName = '${{ parameters.filename }}'
     if ((Test-Path $fileName) -ne $True)
     {
       $errMsg = "Expected file not found: $fileName"
