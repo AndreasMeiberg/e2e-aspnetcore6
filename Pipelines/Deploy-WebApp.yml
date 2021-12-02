@@ -63,7 +63,8 @@ jobs:
           name: WebAppDeploy
           inputs:
             azureSubscription: ${{ parameters.azureSubscription }}
-            appType:           webApp
+            appType:           webAppLinux
+            runtimeStack:      'DOTNETCORE|6.0'
             appName:           $(Azure.WebAppName)
             package:           $(Pipeline.Workspace)/CI/WebApp/WebApp.zip
             appSettings:       >
