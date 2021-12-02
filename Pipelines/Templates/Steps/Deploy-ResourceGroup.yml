@@ -5,6 +5,8 @@ parameters:
   type: string
 - name: resourceGroup
   type: string
+- name: templateFile
+  type: string
 - name: overrideParameters
   type: string
 - name: deploymentMode
@@ -23,6 +25,6 @@ inputs:
     resourceGroupName:              '${{ parameters.resourceGroup }}'
     location:                       '${{ parameters.location }}'
     templateLocation:               'Linked artifact'
-    csmFile:                        '$(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json'
-    deploymentMode:                 'Complete'
+    csmFile:                        '${{ parameters.templateFile }}'
+    deploymentMode:                 '${{ parameters.deploymentMode }}'
     overrideParameters:             '${{ parameters.overrideParameters }}'
