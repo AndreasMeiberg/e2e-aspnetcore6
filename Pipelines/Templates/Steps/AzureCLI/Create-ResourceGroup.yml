@@ -24,3 +24,5 @@ steps:
       Project=$(System.TeamProject)
       Repo=$(Build.Repository.Name)
       Pipeline=$(System.DefinitionName)
+      Branch=$(Build.SourceBranch)
+      Last-Update=$(Get-Date -Format u)
