@@ -89,7 +89,7 @@ jobs:
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#pwsh
         - powershell: |
             ./SmokeTest.ps1 -url $(WebAppDeploy.AppServiceApplicationUrl)
-          displayName: 'Check HTTP status: web app response'
+          displayName: 'Check HTTP status (staging)'
           workingDirectory: '$(Pipeline.Workspace)/CI/DeployScripts'
           failOnStderr: true
           retryCountOnTaskFailure: 3
@@ -97,6 +97,7 @@ jobs:
         # # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-app-service-manage
         # - task: AzureAppServiceManage@0
         #   displayName: 'Swap Slots'
+        #   name: SlotSwap
         #   inputs:
         #     azureSubscription:  ${{ parameters.azureConnection }}
         #     ResourceGroupName:  $(Azure.ResourceGroup)
