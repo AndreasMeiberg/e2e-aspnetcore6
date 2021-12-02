@@ -28,7 +28,7 @@ jobs:
     displayName: 'Download artifact: ArmTemplate'
     artifact: ArmTemplate
 
-  - template: Templates/Steps/Check-FileExists
+  - template: Templates/Steps/Check-FileExists.yml
     parameters:
       fileName: $(armTemplateFile)
 
