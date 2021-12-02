@@ -12,6 +12,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.jobName }}
+  displayName: 'Deploy Azure resources'
 
   pool:
     name: default
