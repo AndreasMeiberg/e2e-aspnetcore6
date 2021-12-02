@@ -5,7 +5,7 @@
 # Created     : February 22, 2020
 
 steps:
-- ${{ if variables['System.Debug'] }}
+- ${{ if variables['System.Debug'] }}:
   - script: printenv 
     displayName: 'Debug: environment variables (Linux)'
     condition: and( eq( variables['system.debug'], true ), ne( variables['agent.os'], 'windows_nt' ) )
