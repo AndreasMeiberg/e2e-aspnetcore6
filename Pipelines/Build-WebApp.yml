@@ -53,16 +53,20 @@ jobs:
       arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore' # Update this to match your need
 
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli
+  # Note: Install coverlet.collector package to test projects
   - task: DotNetCoreCLI@2
     displayName: 'dotnet test'
     inputs:
       command: test
       projects: '$(projectsToTest)'
-      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore --no-build --filter TestCategory!=UI'
-      # ${{ if eq(variables['agent.os'], 'windows_nt') }}: # only for Windows
-      #   arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore --no-build --filter TestCategory!=UI ---collect "Code coverage"'
-      # ${{ if ne(variables['agent.os'], 'windows_nt') }}: # not on Windows
-      #   arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore --no-build --filter TestCategory!=UI --settings $(Build.SourcesDirectory)/Application/aspnet-core-sample.UnitTests/CodeCoverage.runsettings --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+      arguments: >
+        --configuration ${{ parameters.buildConfiguration }}
+        --no-restore
+        --no-build
+        --filter TestCategory!=UI
+        --collect:"XPlat Code Coverage"
+        -- RunConfiguration.DisableAppDomain=true'
+      # --settings $(Build.SourcesDirectory)/Application/aspnet-core-sample.UnitTests/CodeCoverage.runsettings
       publishTestResults: true
       testRunTitle: 'Unit Tests'
 
