@@ -1,0 +1,28 @@
+parameters:
+- name: azureSubscription
+  type: string
+- name: location
+  type: string
+- name: resourceGroup
+  type: string
+- name: overrideParameters
+  type: string
+- name: deploymentMode
+  type: string
+  values:
+  - Incremental
+  - Complete
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+inputs:
+    deploymentScope:                'Resource Group'
+    azureResourceManagerConnection: '${{ parameters.azureSubscription }}'
+    #subscriptionId:                 '9b4b958c-bd31-4c60-a834-c4bb38488748'
+    action:                         'Create Or Update Resource Group'
+    resourceGroupName:              '${{ parameters.resourceGroup }}'
+    location:                       '${{ parameters.location }}'
+    templateLocation:               'Linked artifact'
+    csmFile:                        '$(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json'
+    deploymentMode:                 'Complete'
+    overrideParameters:             '${{ parameters.overrideParameters }}'
