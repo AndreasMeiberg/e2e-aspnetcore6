@@ -80,9 +80,16 @@ jobs:
             echo WebAppDeploy.AppServiceApplicationUrl=$(WebAppDeploy.AppServiceApplicationUrl)
           displayName: 'Print output variable'
 
+          # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema#download
+        - download: CI
+          displayName: 'Download artifact: DeployScripts'
+          artifact: DeployScripts
+          patterns: 'SmokeTest.ps1'
+
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#pwsh
-        #- pwsh: './SmokeTest.ps1 -url $(WebAppDeploy.AppServiceApplicationUrl)'
-        #  displayName: 'Check web app response'
-        #  workingDirectory: '$(Pipeline.Workspace)/CI/DeployScripts'
-        #  failOnStderr: true
-        #  retryCountOnTaskFailure: 3
+        - powershell: |
+            ./SmokeTest.ps1 -url $(WebAppDeploy.AppServiceApplicationUrl)
+          displayName: 'Check HTTP status: web app response'
+          workingDirectory: '$(Pipeline.Workspace)/CI/DeployScripts'
+          failOnStderr: true
+          retryCountOnTaskFailure: 3
