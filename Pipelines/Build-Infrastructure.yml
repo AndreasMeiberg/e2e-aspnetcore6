@@ -60,5 +60,5 @@ jobs:
       # Alternative: --parameters @Configuration/settings.json
 
   - publish: $(Build.StagingDirectory)
-    displayName: 'publish: ARM-Template'
-    artifact: ARM-Template
+    displayName: 'publish: ArmTemplate'
+    artifact: ArmTemplate
