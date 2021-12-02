@@ -1,0 +1,32 @@
+# File        : Check-FileExists.yml
+# Type        : Step template
+# Description : Add this template to check if a file exists.
+# Author      : Neno Loje
+# Created     : August 7, 2019
+
+parameters:
+- name: filename
+  type: string
+
+steps:
+- pwsh: |
+    $fileName = ${{ parameters.filename }}
+    if (!$fileName)
+    {
+      $errMsg = "Missing template parameter: $fileName"
+      Write-Host $errMsg
+      Write-Host "##vso[task.logissue type=error]$errMsg"
+      Write-Host "##vso[task.complete result=Failed;]"
+    }
+    else if ((Test-Path $fileName) -ne $True)
+    {
+      $errMsg = "Expected file not found: $fileName"
+      Write-Host $errMsg
+      Write-Host "##vso[task.logissue type=error]$errMsg"
+      Write-Host "##vso[task.complete result=Failed;]"
+    }
+    else
+    {
+      Write-Host "File exists: $fileName. All good."
+    }
+  displayName: 'Check file exists: ${{ parameters.filename }}'
