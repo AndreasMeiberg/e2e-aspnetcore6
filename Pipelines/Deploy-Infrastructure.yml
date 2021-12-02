@@ -13,6 +13,9 @@ parameters:
 jobs:
 - job: ${{ parameters.jobName }}
 
+  pool:
+    name: default
+
   variables:
   - template: Config/Stage-Test.yml
   - name: armTemplateFile
