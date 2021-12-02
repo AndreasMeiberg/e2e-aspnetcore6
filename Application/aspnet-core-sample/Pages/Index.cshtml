@@ -4,7 +4,23 @@
     ViewData["Title"] = "Home page";
 }
 
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="row">
+    <div class="col">
+        <h2>Deployment Info</h2>
+        <p>
+            <label>Environment:</label> <code>@Configuration["DeploymentInfo:Environment"]</code><br />
+            <label>Branch:</label> <code>@Configuration["DeploymentInfo:Branch"]</code><br />
+            <label>Release Date:</label> <code>@Configuration["DeploymentInfo:ReleaseDate"]</code><br />
+            <label>Build:</label> <code>@Configuration["DeploymentInfo:BuildNumber"]</code><br />
+            <label>Some Setting:</label> <code>@Configuration["SomeSetting"]</code>
+        </p>
+    </div>
 </div>

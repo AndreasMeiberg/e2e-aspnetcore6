@@ -10,8 +10,12 @@ trigger:
     - feature/*
     - topic/*
   paths:
-    include:
-    - Application/*
+    exclude:
+    - .azuredevops/*
+    - Docs/*
+    - Pipelines/*
+    - azurepipelines-coverage.yml
+    - README.md
 
 variables:
   buildConfiguration: 'Release'
