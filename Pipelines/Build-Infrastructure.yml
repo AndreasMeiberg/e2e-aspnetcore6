@@ -39,10 +39,6 @@ jobs:
       inlineScript: |
         az bicep build --file $(bicepFile) --outfile $(armTemplate)
 
-  # - script: bicep build Main.bicep --outfile $(armTemplate)
-  #   displayName: 'bicep build'
-  #   workingDirectory: $(Build.SourcesDirectory)/Infrastructure
-
   - task: AzureCLI@2
     displayName: 'az deployment group validate'
     inputs:
