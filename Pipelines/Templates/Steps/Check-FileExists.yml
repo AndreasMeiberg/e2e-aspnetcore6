@@ -18,7 +18,7 @@ steps:
       Write-Host "##vso[task.logissue type=error]$errMsg"
       Write-Host "##vso[task.complete result=Failed;]"
     }
-    else if ((Test-Path $fileName) -ne $True)
+    elseif ((Test-Path $fileName) -ne $True)
     {
       $errMsg = "Expected file not found: $fileName"
       Write-Host $errMsg
