@@ -17,8 +17,8 @@ jobs:
 
   # By default, files are downloaded to $(Pipeline.Workspace)/{pipeline}/{artifact}
   - download: CI
-    displayName: 'Download artifact: ArmTemplates'
-    artifact: ArmTemplates
+    displayName: 'Download artifact: ArmTemplate'
+    artifact: ArmTemplate
 
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/
   - task: AzureCLI@2
