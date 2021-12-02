@@ -6,8 +6,6 @@
 
 parameters:
 - name: jobName
-  default: 'DeployJob'
-- name: environmentName
 - name: azureConnection
 
 jobs:
