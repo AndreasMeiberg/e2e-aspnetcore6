@@ -26,11 +26,11 @@ stages:
   - template: Deploy-Infrastructure.yml
     parameters:
       jobName: DeployInfra
-      azureSubscription: 'Azure Subscription'
+      azureSubscription: ${{ variables['Azure.Connection'] }}
 
   - template: Deploy-WebApp.yml
     parameters:
       jobName: DeployWebApp
       dependsOn: DeployInfra
-      environmentName: $(EnvironmentName)
-      azureSubscription: 'Azure Subscription'
+      environmentName: ${{ variables.EnvironmentName }}
+      azureSubscription: ${{ variables['Azure.Connection'] }}
