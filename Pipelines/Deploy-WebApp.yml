@@ -86,7 +86,7 @@ jobs:
           artifact: DeployScripts
           patterns: 'SmokeTest.ps1'
 
-        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#pwsh
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#powershell
         - powershell: |
             ./SmokeTest.ps1 -url $(WebAppDeploy.AppServiceApplicationUrl)
           displayName: 'Check HTTP status (staging)'
@@ -94,14 +94,29 @@ jobs:
           failOnStderr: true
           retryCountOnTaskFailure: 3
 
-        # # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-app-service-manage
-        # - task: AzureAppServiceManage@0
-        #   displayName: 'Swap Slots'
-        #   name: SlotSwap
-        #   inputs:
-        #     azureSubscription:  ${{ parameters.azureConnection }}
-        #     ResourceGroupName:  $(Azure.ResourceGroup)
-        #     Action:             Swap Slots
-        #     WebAppName:         $(Azure.WebAppName)
-        #     sourceSlot:         $(Azure.SlotName)
-        #     swapWithProduction: true
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-app-service-manage
+        - task: AzureAppServiceManage@0
+          displayName: 'Swap Slots'
+          name: SlotSwap
+          inputs:
+            azureSubscription:  ${{ parameters.azureConnection }}
+            ResourceGroupName:  $(Azure.ResourceGroup)
+            Action:             Swap Slots
+            WebAppName:         $(Azure.WebAppName)
+            sourceSlot:         $(Azure.SlotName)
+            swapWithProduction: true
+
+        - script: printenv 'Kommt SlotSwap darin vor?'
+
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#powershell
+        - powershell: |
+            Write-Host "##vso[task.setvariable variable=SUT;]https://$(Azure.WebAppName).azurewebsites.net"
+          displayName: "Set variable"
+
+        # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?#powershell
+        - powershell: |
+            ./SmokeTest.ps1 -url $(SUT)
+          displayName: 'Check HTTP status (production)'
+          workingDirectory: '$(Pipeline.Workspace)/CI/DeployScripts'
+          failOnStderr: true
+          retryCountOnTaskFailure: 3
