@@ -16,7 +16,12 @@ variables:
 - template: Config/Pipeline-Global.yml
 
 stages:
+#--------------------------------------------------------------------------------
 - stage: TEST
+
+  variables:
+  - template: Config/Stage-Test.yml
+
   jobs:
   - template: Deploy-Infrastructure.yml
     parameters:
