@@ -1,6 +1,5 @@
 # File        : Build-Infrastructure.yml
 # Description : Contains a job that builds the Azure Bicep files to ARM templates (JSON).
-# Author      : Neno Loje
 
 parameters:
 - name: jobName
