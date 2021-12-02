@@ -56,7 +56,7 @@ jobs:
 
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-rm-web-app
         - task: AzureWebApp@1
-          displayName: 'Deploy web app: $(Azure.WebAppName)' #' to staging slot'
+          displayName: 'Deploy web app: $(Azure.WebAppName) to staging slot'
           name: WebAppDeploy
           inputs:
             azureSubscription: ${{ parameters.azureSubscription }}
@@ -69,8 +69,8 @@ jobs:
               -WEBSITE_TIME_ZONE "W. Europe Standard Time"
             # see full list at: https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-vista/cc749073(v=ws.10)
             deploymentMethod:  runFromPackage
-            #deployToSlotOrASE: true
-            #slotName:          $(Azure.SlotName)
+            deployToSlotOrASE: true
+            slotName:          $(Azure.SlotName)
             resourceGroupName: $(Azure.ResourceGroup)
           #outputs:
           #  AppServiceApplicationUrl (reference it by $(WebAppDeploy.AppServiceApplicationUrl) or  %WEBAPPDEPLOY_APPSERVICEAPPLICATIONUR%)
@@ -93,3 +93,14 @@ jobs:
           workingDirectory: '$(Pipeline.Workspace)/CI/DeployScripts'
           failOnStderr: true
           retryCountOnTaskFailure: 3
+
+        # # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-app-service-manage
+        # - task: AzureAppServiceManage@0
+        #   displayName: 'Swap Slots'
+        #   inputs:
+        #     azureSubscription:  ${{ parameters.azureConnection }}
+        #     ResourceGroupName:  $(Azure.ResourceGroup)
+        #     Action:             Swap Slots
+        #     WebAppName:         $(Azure.WebAppName)
+        #     sourceSlot:         $(Azure.SlotName)
+        #     swapWithProduction: true
