@@ -1,8 +1,5 @@
-# File: Deploy-WebApp.yml
-
+# File        : Deploy-WebApp.yml
 # Description : This job template describes a deployment of an Azure web app.
-# Author      : Neno Loje
-# Created     : February 22, 2020
 
 parameters:
 - name: jobName
