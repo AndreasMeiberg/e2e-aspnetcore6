@@ -10,7 +10,7 @@ param location string = resourceGroup().location
 @maxLength(55)
 param appName string
 
-var webAppName = toLower('${appName}')
+var webAppName = toLower(appName)
 // var appServicePlanName = toLower('${appName}-plan')
 
 module webApp './Modules/BasicLinuxWebApp.bicep' = {
