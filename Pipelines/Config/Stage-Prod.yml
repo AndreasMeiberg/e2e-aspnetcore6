@@ -1,0 +1,7 @@
+variables:
+  Azure.Connection:      'Azure Subscription'
+  Azure.ResourceGroup:   'demo-e2e-app-prod'
+  Azure.WebAppName:      'e2e-app-prod'
+  Azure.SlotName:        'staging'
+  EnvironmentName:       'e2e-aspnetcore6-prod'
+  SomeSetting:           'Value for PROD env (defined in YAML)'
