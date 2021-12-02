@@ -11,14 +11,7 @@ parameters:
 steps:
 - powershell: |
     $fileName = ${{ parameters.filename }}
-    if (!$fileName)
-    {
-      $errMsg = "Missing template parameter: fileName"
-      Write-Host $errMsg
-      Write-Host "##vso[task.logissue type=error]$errMsg"
-      Write-Host "##vso[task.complete result=Failed;]"
-    }
-    elseif ((Test-Path $fileName) -ne $True)
+    if ((Test-Path $fileName) -ne $True)
     {
       $errMsg = "Expected file not found: $fileName"
       Write-Host $errMsg
