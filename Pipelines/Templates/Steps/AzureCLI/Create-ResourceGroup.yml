@@ -18,7 +18,6 @@ steps:
       az group create
       --location "${{ parameters.location }}"
       --name "${{ parameters.name }}"
-      --output table
       --tags
       Organization=$(System.CollectionUri)
       Stage=$(System.StageDisplayName)
