@@ -1,0 +1,22 @@
+parameters:
+- name: stageName # specify stage in PascalCase like this: "Test", "Prod"
+  type: string
+
+stages:  
+- stage: ${{ upper(parameters.stageName) }}
+
+  variables:
+  - template: Config/Stage-${{ upper(parameters.stageName) }}.yml
+
+  jobs:
+  - template: Deploy-Infrastructure.yml
+    parameters:
+      jobName: DeployInfra
+      azureSubscription: ${{ variables['Azure.Connection'] }}
+
+  - template: Deploy-WebApp.yml
+    parameters:
+      jobName: DeployWebApp
+      dependsOn: DeployInfra
+      environmentName: ${{ variables.EnvironmentName }}
+      azureSubscription: ${{ variables['Azure.Connection'] }}
