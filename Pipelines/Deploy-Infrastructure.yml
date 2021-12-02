@@ -53,4 +53,4 @@ jobs:
       csmFile:                        '$(armTemplateFile)'
       deploymentMode:                 'Complete'
       overrideParameters: >-
-        -appName "${{ variables['Azure.WebAppName'] }}"
+        -appName "$(Azure.WebAppName)"
