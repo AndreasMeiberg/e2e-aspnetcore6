@@ -1,0 +1,14 @@
+# File        : Print-DebugInfo.yml
+# Type        : Step template
+# Description : Add this template to print debug info, when System.Debug = true
+# Author      : Neno Loje
+# Created     : February 22, 2020
+
+steps:
+- ${{ if variables['System.Debug'] }}
+  - script: printenv 
+    displayName: 'Debug: environment variables (Linux)'
+    condition: and( eq( variables['system.debug'], true ), ne( variables['agent.os'], 'windows_nt' ) )
+  - script: set 
+    displayName: 'Debug: environment variables (Windows)'
+    condition: and( eq( variables['system.debug'], true ), eq( variables['agent.os'], 'windows_nt' ) )
