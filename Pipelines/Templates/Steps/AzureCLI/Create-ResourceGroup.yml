@@ -20,7 +20,7 @@ steps:
       --name "${{ parameters.name }}"
       --tags
       Organization=$(System.CollectionUri)
-      Stage=$(System.StageDisplayName)
+      Stage=$(System.StageName)
       Project=$(System.TeamProject)
       Repo=$(Build.Repository.Name)
       Pipeline=$(System.DefinitionName)
