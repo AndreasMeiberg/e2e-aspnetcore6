@@ -15,7 +15,4 @@ resources:
 stages:
 - stage: TEST
   jobs:
-  - job: DeployInfra
-    steps:
-    - template: Deploy-Infrastructure.yml
-
+  - template: Deploy-Infrastructure.yml
