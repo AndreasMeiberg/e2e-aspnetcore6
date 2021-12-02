@@ -31,6 +31,10 @@ jobs:
     displayName: 'Download artifact: ArmTemplate'
     artifact: ArmTemplate
 
+  - template: Templates/Steps/Check-FileExists.yml
+    parameters:
+      fileName: $(armTemplateFile)
+
   - template: Templates/Steps/AzureCLI/Create-ResourceGroup.yml
     parameters:
       azureSubscription: ${{ parameters.azureConnection }}
