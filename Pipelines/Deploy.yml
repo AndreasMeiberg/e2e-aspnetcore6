@@ -18,4 +18,4 @@ stages:
   - template: Deploy-Infrastructure.yml
     parameters:
       jobName: DeployInfra
-      azureConnection: Microsoft Azure
+      azureConnection: 'Azure Subscription'
