@@ -7,7 +7,7 @@
 parameters:
 - name: jobName
   type: string
-- name: azureConnection
+- name: azureSubscription
   type: string
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
 
   - template: Templates/Steps/AzureCLI/Create-ResourceGroup.yml
     parameters:
-      azureSubscription: ${{ parameters.azureConnection }}
+      azureSubscription: ${{ parameters.azureSubscription }}
       name: $(Azure.ResourceGroup)
       location: $(Azure.Region)
 
@@ -45,7 +45,7 @@ jobs:
     displayName: 'Deploy Azure resources (complete mode)'
     inputs:
       deploymentScope:                'Resource Group'
-      azureResourceManagerConnection: '${{ parameters.azureConnection }}'
+      azureResourceManagerConnection: '${{ parameters.azureSubscription }}'
       action:                         'Create Or Update Resource Group'
       resourceGroupName:              '$(Azure.ResourceGroup)'
       location:                       '$(Azure.Region)'
