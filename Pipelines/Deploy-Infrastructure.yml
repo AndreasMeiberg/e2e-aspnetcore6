@@ -13,7 +13,8 @@ parameters:
 jobs:
 - job: ${{ parameters.jobName }}
   variables:
-  - template: Config/Stage-Test.yml
+  - template:         Config/Stage-Test.yml
+  - armTemplateFile:  $(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json
   steps:
   - checkout: none
 
@@ -23,6 +24,10 @@ jobs:
   - download: CI
     displayName: 'Download artifact: ArmTemplate'
     artifact: ArmTemplate
+
+  - template: Templates/Steps/Check-FileExists
+    parameters:
+      fileName: $(armTemplateFile)
 
   - template: Templates/Steps/AzureCLI/Create-ResourceGroup.yml
     parameters:
@@ -39,7 +44,7 @@ jobs:
       resourceGroupName:              '$(Azure.ResourceGroup)'
       location:                       '$(Azure.Region)'
       templateLocation:               'Linked artifact'
-      csmFile:                        '$(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json'
+      csmFile:                        '$(armTemplateFile)'
       deploymentMode:                 'Complete'
       overrideParameters: >-
         -appName ${{ variables['Azure.WebAppName'] }}
