@@ -1,4 +1,4 @@
-# File        : Build-WebApp.yml
+# File        : Job-BuildWebApp.yml
 # Description : Contains a job that builds the ASP .NET 6 web app.
 
 parameters:

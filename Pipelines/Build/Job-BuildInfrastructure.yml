@@ -1,4 +1,4 @@
-# File        : Build-Infrastructure.yml
+# File        : Job-BuildInfrastructure.yml
 # Description : Contains a job that builds the Azure Bicep files to ARM templates (JSON).
 
 parameters:
