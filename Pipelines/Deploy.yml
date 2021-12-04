@@ -21,10 +21,10 @@ variables:
 - template: Config/Pipeline-Global.yml
 
 stages:
-- template: Deploy-Stage-Template.yml
+- template: Deploy/Stage-Template.yml
   parameters:
     stageName: Test
 
-- template: Deploy-Stage-Template.yml
+- template: Deploy/Stage-Template.yml
   parameters:
     stageName: Prod

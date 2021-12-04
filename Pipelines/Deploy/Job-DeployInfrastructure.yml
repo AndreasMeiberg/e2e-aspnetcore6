@@ -1,0 +1,53 @@
+# File        : Job-DeployInfrastructure.yml
+# Description : This job template describes a deployment to an Azure resource group.
+
+parameters:
+- name: jobName
+  type: string
+- name: azureSubscription
+  type: string
+
+jobs:
+- job: ${{ parameters.jobName }}
+  displayName: 'Deploy Azure Resources'
+
+  pool:
+    name: default
+
+  variables:
+    armTemplateFile: '$(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json'
+
+  steps:
+  - checkout: none
+
+  - template: Templates/Steps/Print-DebugInfo.yml
+
+  # By default, files are downloaded to $(Pipeline.Workspace)/{pipeline}/{artifact}
+  - download: CI
+    displayName: 'Download artifact: ArmTemplate'
+    artifact: ArmTemplate
+
+  - template: Templates/Steps/Check-FileExists.yml
+    parameters:
+      fileName: $(armTemplateFile)
+
+  - template: Templates/Steps/AzureCLI/Create-ResourceGroup.yml
+    parameters:
+      azureSubscription: ${{ parameters.azureSubscription }}
+      name: $(Azure.ResourceGroup)
+      location: $(Azure.Region)
+
+  # https://github.com/microsoft/azure-pipelines-tasks/tree/master/Tasks/AzureResourceManagerTemplateDeploymentV3
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Deploy Azure resources (complete mode)'
+    inputs:
+      deploymentScope:                'Resource Group'
+      azureResourceManagerConnection: '${{ parameters.azureSubscription }}'
+      action:                         'Create Or Update Resource Group'
+      resourceGroupName:              '$(Azure.ResourceGroup)'
+      location:                       '$(Azure.Region)'
+      templateLocation:               'Linked artifact'
+      csmFile:                        '$(armTemplateFile)'
+      deploymentMode:                 'Complete'
+      overrideParameters: >-
+        -appName "$(Azure.WebAppName)"
