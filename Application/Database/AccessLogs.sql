@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[AccessLogs]
+(
+	[ID] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[PageName] nvarchar(128) NOT NULL, 
+	[AccessDate] DATETIME NOT NULL DEFAULT GETUTCDATE() 
+)

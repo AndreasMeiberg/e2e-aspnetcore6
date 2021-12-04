@@ -30,7 +30,16 @@ jobs:
   parameters:
     jobName: BuildInfra
 
+
+- template: Build/Job-BuildSQLDB.yml
+  parameters:
+    jobName: BuildDB
+    buildConfiguration: $(buildConfiguration)
+    solutionFile:       'Application/aspnet-core-sample.sln'
+    projectName:        'aspnet-core-sample.Database'
+
 - template: Templates/Jobs/Ensure-Tests.yml
   parameters:
     dependsOn: BuildWebApp
     minNumOfExpectedTests: 1
+

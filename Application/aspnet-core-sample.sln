@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnet-core-sample.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-core-sample.FunctionalTests", "aspnet-core-sample.FunctionalTests\aspnet-core-sample.FunctionalTests.csproj", "{138224C9-7B67-4C26-9514-D0080DA0DA9F}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "aspnet-core-sample.Database", "Database\aspnet-core-sample.Database.sqlproj", "{0CBF1AEE-39A8-417A-A06B-878F170EF8B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,12 @@ Global
 		{138224C9-7B67-4C26-9514-D0080DA0DA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{138224C9-7B67-4C26-9514-D0080DA0DA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{138224C9-7B67-4C26-9514-D0080DA0DA9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CBF1AEE-39A8-417A-A06B-878F170EF8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CBF1AEE-39A8-417A-A06B-878F170EF8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CBF1AEE-39A8-417A-A06B-878F170EF8B6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0CBF1AEE-39A8-417A-A06B-878F170EF8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CBF1AEE-39A8-417A-A06B-878F170EF8B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CBF1AEE-39A8-417A-A06B-878F170EF8B6}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

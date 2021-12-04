@@ -1,0 +1,51 @@
+# File        : Job-BuildSQLDB.yml
+# Description : This template is for building SQL Server Database Tools (SSDT) projects.
+# Author      : Neno Loje
+# Created     : November 25, 2019
+
+parameters:
+- name: jobName
+  type: string
+- name: agentPool
+  type: object
+  default:
+    vmImage: windows-latest
+- name: solutionFile
+  type: string
+- name: projectName
+  type: string
+- name: buildConfiguration
+  type: string
+  default: 'Release'
+- name: artifactName
+  type: string
+  default: 'Database'
+  
+jobs:
+- job: ${{ parameters.jobName }}
+  displayName: 'Build SQL Database'
+
+  pool:
+    ${{ parameters.agentPool }}
+
+  variables:
+     # Note: We need to replace dots with underscores ("A.B" -> "A_B") in project name
+    projectNameSanitized: ${{ replace(parameters.projectName, '.', '_') }}
+    stagingDirectory: '$(Build.StagingDirectory)/${{ parameters.artifactName }}'
+
+  steps:
+  - checkout: self
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/visual-studio-build
+  - task: VSBuild@1
+    displayName: "Build database project (SSDT)"
+    inputs:
+      solution:       ${{ parameters.solutionFile }}
+      msbuildArgs:    '/target:$(projectNameSanitized) /p:OutputPath=$(stagingDirectory)'
+      platform:       'Any CPU'
+      configuration:  '${{ parameters.buildConfiguration }}'
+
+  - publish: $(stagingDirectory)
+    displayName: 'Publish Artifact: ${{ parameters.artifactName }}'
+    artifact: ${{ parameters.artifactName }}
+
