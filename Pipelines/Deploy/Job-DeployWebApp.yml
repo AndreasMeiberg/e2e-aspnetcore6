@@ -28,7 +28,7 @@ jobs:
         # Stop artifacts from being downloaded automatically
         - download: none
 
-        - template: Templates/Steps/Print-DebugInfo.yml
+        - template: ../Templates/Steps/Print-DebugInfo.yml
 
         - script: set RESOURCES_PIPELINE_CI
           displayName: 'Debug info: CI pipeline variables'
