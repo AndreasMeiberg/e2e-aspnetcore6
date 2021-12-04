@@ -8,7 +8,7 @@ parameters:
     name: Default
 
 pool:
-  ${{ parameters.agentpPool }}
+  ${{ parameters.agentPool }}
 
 steps:
 - powershell: | 
