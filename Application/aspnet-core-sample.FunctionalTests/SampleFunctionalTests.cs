@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
 
 namespace aspnet_core_sample.FunctionalTests
 {
@@ -10,7 +10,7 @@ namespace aspnet_core_sample.FunctionalTests
     public class SampleFunctionalTests
     {
         private static TestContext testContext;
-        private RemoteWebDriver driver;
+        private WebDriver driver;
 
         public TestContext TestContext { get; set; }
 
@@ -73,7 +73,7 @@ namespace aspnet_core_sample.FunctionalTests
             }
         }
 
-        private static RemoteWebDriver GetChromeDriver()
+        private static WebDriver GetChromeDriver()
         {
             var path = Environment.GetEnvironmentVariable("ChromeWebDriver");
             var options = new ChromeOptions();
