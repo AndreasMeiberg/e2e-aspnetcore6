@@ -16,7 +16,7 @@ Further advantages include:
 - **Redirect** certain amount of users/traffic to the new version (slot)
 - Reduces **startup times** bymaking sure the app is fully loaded
 
-## Solution includes
+## Part of the solution
 
 - Bicep file: [windows-webapp-slots-template.json](/Infrastructure/Modules/BasicLinuxWebAppWithSlot.bicep) with one additional parameter **SlotName** (typically: `staging`)
 - Changes to build and deployment pipelines to point to the new ARM template
