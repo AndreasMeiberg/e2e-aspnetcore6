@@ -10,7 +10,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.jobName }}
-  displayName: 'Build ASP.NET Core app'
+  displayName: 'Build ASP.NET Web App'
   
   pool:
     vmImage: ubuntu-latest
