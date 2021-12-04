@@ -1,5 +1,15 @@
 trigger: none
 
+parameters:
+- name: agentPool
+  displayName: 'Enter agent pool to run'
+  type: object
+  default:
+    name: Default
+
+pool:
+  ${{ parameters.agentpPool }}
+
 steps:
 - powershell: | 
     az --version
