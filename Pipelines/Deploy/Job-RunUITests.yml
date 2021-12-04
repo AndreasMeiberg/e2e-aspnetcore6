@@ -25,6 +25,7 @@ jobs:
 - job: ${{ parameters.jobName }}
   displayName: 'Run Functional Tests'
   dependsOn: ${{ parameters.dependsOn }}
+  timeoutInMinutes: 5
 
   pool:
     ${{ parameters.agentPool }}
@@ -69,4 +70,5 @@ jobs:
       uiTests: true
       failOnMinTestsNotRun: true
       minimumExpectedTests: 1
+      timeoutInMinutes: 3
       diagnosticsEnabled: true
