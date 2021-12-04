@@ -1,7 +1,7 @@
 # Docs: https://docs.microsoft.com/en-us/cli/azure/repos/policy/approver-count?view=azure-cli-latest&WT.mc_id=DOP-MVP-21138
 
-$repo = "e2e-aspnetcore6"
-$branch = 'refs/head/main'
+$repoId = $env:BUILD_REPOSITORY_ID
+$branch = 'refs/heads/main'
 
 # Approver count policy
 az repos policy approver-count create `
