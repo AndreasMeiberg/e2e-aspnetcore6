@@ -8,7 +8,7 @@ parameters:
   - 'cloud'
   - 'on-prem'
 
-steps:
-- template: Utils/Run-AzDevOpsCLI.yml
+jobs:
+- template: Utils/Job-AzDevOpsCLI.yml
   parameters:
     agentType: ${{ parameters.agentType }}
