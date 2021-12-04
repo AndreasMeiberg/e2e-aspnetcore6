@@ -10,7 +10,7 @@
  BuildWebApp -->|depends on| EnsureTests
  BuildInfra -->|depends on| EnsureTests
  BuildDatabase -->|depends on| EnsureTests
- subgraph "azure-pipelines.yml"
+ subgraph "Build.yml"
    BuildWebApp
    BuildInfra
    BuildDatabase
@@ -19,8 +19,8 @@
  EnsureTests -->|trigger| DeployInfra
  DeployInfra -->|depends on| DeployWebApp
  DeployWebApp -->|depends on| FunctionalTests
- subgraph "deploy.yml"
-   subgraph "dev stage"
+ subgraph "Deploy.yml"
+   subgraph "TEST stage"
      DeployInfra
      DeployWebApp
      FunctionalTests
