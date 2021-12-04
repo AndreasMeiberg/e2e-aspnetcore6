@@ -12,6 +12,11 @@ resources:
         include:
         - main
 
+# FYI: Run name of build pipeline is stored in: RESOURCES_PIPELINE_CI_RUNNAME
+
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/run-number
+name: Release-$(Rev:r)
+
 variables:
 - template: Config/Pipeline-Global.yml
 

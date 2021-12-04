@@ -21,9 +21,14 @@ jobs:
     DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true' # perf improvement on hosted agents
     projectsToBuild:        'Application/**/*.csproj'
     projectsToTest:         'Application/**/*Tests/*.csproj'
+    functionalTestsFolder:  'Application/aspnet-core-sample.FunctionalTests'
     sdkVersion:             '6.0.100'
 
   steps:
+
+  # --------------------------------------------------------------------------------
+  # Publish: WebApp
+  # --------------------------------------------------------------------------------
   # When not running in container, uncomment the following:
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer?view=azure-devops
   # - task: UseDotNet@2
@@ -103,7 +108,38 @@ jobs:
     displayName: 'Publish artifact: WebApp'
     artifact: WebApp
 
+# --------------------------------------------------------------------------------
+# Publish: FunctionalTests
+# --------------------------------------------------------------------------------
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet publish *FunctionalTests*.csproj'
+    inputs:
+      command: publish
+      projects: '$(functionalTestsFolder)/*.csproj'
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --output $(Build.StagingDirectory)/FunctionalTests --no-restore --no-build'
+      publishWebProjects: false
+      zipAfterPublish: false
+      modifyOutputPath: false
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/copy-files
+  - task: CopyFiles@2
+    displayName: "Copy .runsettings file"
+    inputs:
+      SourceFolder: '$(functionalTestsFolder)'
+      Contents: '*.runsettings'
+      TargetFolder: '$(Build.StagingDirectory)/FunctionalTests'
+
+  - template: Templates/Steps/Check-FileExists.yml
+    parameters:
+      filename: '$(Build.StagingDirectory)/FunctionalTests/functionalTests.runsettings'
+
+  - publish: $(Build.StagingDirectory)/FunctionalTests
+    displayName: 'Publish artifact: FunctionalTests'
+    artifact: FunctionalTests
+
+# --------------------------------------------------------------------------------
 # Publish: DeployScripts
+# --------------------------------------------------------------------------------
   - publish: $(Build.SourcesDirectory)/Pipelines/DeployScripts
     displayName: 'Publish artifact: DeployScripts'
     artifact: DeployScripts

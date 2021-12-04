@@ -1,0 +1,81 @@
+# File: Job-RunUITests.yml
+
+# Description : Contains a job that runs a set of functional UI tests on a hosted Windows agent.
+# Author      : Neno Loje
+# Created     : March 14, 2020
+# Last update : September 23, 2021
+
+parameters:
+- name: jobName
+  type: string
+- name: dependsOn
+  type: string
+- name: agentPool
+  type: object
+  default:
+    vmImage: windows-2019
+- name: dotnetSdkVersion
+  type: string
+  default: '6.0.100'
+- name: testPlatformVersion
+  type: string
+  default: '17.0.0'
+
+jobs:
+- job: ${{ parameters.jobName }}
+  displayName: 'Run Functional Tests'
+  dependsOn: ${{ parameters.dependsOn }}
+  pool:
+    ${{ parameters.agentPool }}
+  variables:
+    out1: $[ dependencies.DeployWebApp.outputs['WebAppDeploy.AppServiceApplicationUrl'] ]
+    out2: $[ stageDependencies.TEST.DeployWebApp.outputs['WebAppDeploy.AppServiceApplicationUrl'] ]
+  steps:
+  - checkout: none
+
+  - template: ../Templates/Steps/Print-DebugInfo.yml
+
+  - script: |
+      echo URL=$[dependencies.DeployWebApp.outputs['WebAppDeploy.AppServiceApplicationUrl']]
+      echo out1=$(out1)
+      echo out2=$(out2)
+    displayName: "Print Web App URL"
+
+  - download: CI
+    displayName: 'Download artifact: FunctionalTests'
+    artifact: FunctionalTests
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/dotnet-core-tool-installer
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core SDK ${{ parameters.dotnetSdkVersion }}'
+    inputs:
+      packageType: 'sdk'
+      version: ${{ parameters.dotnetSdkVersion }}
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/vstest-platform-tool-installer
+  - task: VisualStudioTestPlatformInstaller@1
+    displayName: 'Use VS Test Platform: ${{ parameters.testPlatformVersion }}'
+    inputs:
+      packageFeedSelector: 'nugetOrg'
+      versionSelector: 'specificVersion'
+      testPlatformVersion: ${{ parameters.testPlatformVersion }} # or: latestStable, or: latestPreRelease
+
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest
+  - task: VSTest@2
+    displayName: 'Run UI Tests'
+    inputs:
+      testAssemblyVer2: |
+        **\*FunctionalTest*.dll
+        !**\*TestAdapter.dll
+        !**\obj\**
+      searchFolder: '$(Pipeline.Workspace)/CI/FunctionalTests/'
+      vsTestVersion: toolsInstaller
+      runSettingsFile: '$(Pipeline.Workspace)/CI/FunctionalTests/functionalTests.runsettings'
+      overrideTestrunParameters: '-webAppUrl $(webAppUrl)'
+      testRunTitle: 'Functional Tests'
+      uiTests: true
+      failOnMinTestsNotRun: true
+      minimumExpectedTests: 1
+      codeCoverageEnabled: false
+      runOnlyImpactedTests: false
+      diagnosticsEnabled: true

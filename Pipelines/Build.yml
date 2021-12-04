@@ -29,3 +29,8 @@ jobs:
 - template: Build-Infrastructure.yml
   parameters:
     jobName: BuildInfra
+
+- template: Templates/Jobs/Ensure-Tests.yml
+  parameters:
+    dependsOn: BuildWebApp
+    minNumOfExpectedTests: 1

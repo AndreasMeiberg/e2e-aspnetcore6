@@ -5,3 +5,4 @@ variables:
   Azure.SlotName:        'staging'
   EnvironmentName:       'e2e-aspnetcore6-prod'
   SomeSetting:           'Value for PROD env (defined in YAML)'
+  WebAppUrl:             'https://e2e-app-prod.azurewebsites.net'

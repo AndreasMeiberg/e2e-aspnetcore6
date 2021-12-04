@@ -20,3 +20,8 @@ stages:
       dependsOn: DeployInfra
       environmentName: ${{ variables.EnvironmentName }}
       azureSubscription: ${{ variables['Azure.Connection'] }}
+
+  - template: Deploy/Job-RunUITests.yml
+    parameters:
+      jobName: FunctionalTests
+      dependsOn: DeployWebApp
