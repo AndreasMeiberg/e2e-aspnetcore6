@@ -12,6 +12,8 @@ namespace aspnet_core_sample.FunctionalTests
         private static TestContext testContext;
         private RemoteWebDriver driver;
 
+        public TestContext TestContext { get; set; }
+
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
@@ -32,20 +34,23 @@ namespace aspnet_core_sample.FunctionalTests
         }
 
         [TestMethod]
-        [Timeout(600000)]
+        [Timeout(5 * 60 * 1000)] // 5 minutes
         [TestCategory("UI")]
         public void SampleFunctionalTest1()
         {
             var webAppUrl = testContext.Properties["webAppUrl"].ToString();
-            string expectedTitle = "Home page - ASP.NET Core";
+            string expectedTitle = "Home page - ASP.NET Core Sample";
 
             var startTimestamp = DateTime.Now.Millisecond;
-            var endTimestamp = startTimestamp + 60 * 10 * 1000;
+            var endTimestamp = startTimestamp + 2 * 60 * 1000; // 2 minutes
 
             while (true)
             {
                 try
                 {
+                    driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
                     driver.Navigate().GoToUrl(webAppUrl);
                     Assert.AreEqual(expectedTitle, driver.Title, $"Expected title to be '{expectedTitle}'");
 
@@ -55,13 +60,14 @@ namespace aspnet_core_sample.FunctionalTests
 
                     break;
                 }
-                catch
+                catch (Exception ex)
                 {
                     var currentTimestamp = DateTime.Now.Millisecond;
                     if (currentTimestamp > endTimestamp)
                     {
                         throw;
                     }
+                    TestContext.WriteLine($"Error occured ({ex.Message.ToString()}). Will retry in 5 seconds.");
                     Thread.Sleep(5000);
                 }
             }
