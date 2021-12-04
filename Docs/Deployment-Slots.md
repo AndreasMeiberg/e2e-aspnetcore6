@@ -18,9 +18,9 @@ Further advantages include:
 
 ## Part of the solution
 
-- Bicep file: [windows-webapp-slots-template.json](/Infrastructure/Modules/BasicLinuxWebAppWithSlot.bicep) with one additional parameter **SlotName** (typically: `staging`)
+- Bicep file: [BasicLinuxWebAppWithSlot.bicep](/Infrastructure/Modules/BasicLinuxWebAppWithSlot.bicep) with one additional parameter **SlotName** (typically: `staging`)
 - Changes to build and deployment pipelines to point to the new ARM template
-- Changes to `Deploy.yml`:
+- Changes to [Deploy/Job-DeployWebApp.yml](../Pipelines/Deploy/Job-DeployWebApp.yml):
   * Added task `AzureAppServiceManage@0` to swap the staging slot with the production slot.
   * Repeated call to `SmokeTest.ps1` to run tests against staging as well as production slots.
 
