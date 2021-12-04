@@ -129,7 +129,7 @@ jobs:
       Contents: '*.runsettings'
       TargetFolder: '$(Build.StagingDirectory)/FunctionalTests'
 
-  - template: Templates/Steps/Check-FileExists.yml
+  - template: ../Templates/Steps/Check-FileExists.yml
     parameters:
       filename: '$(Build.StagingDirectory)/FunctionalTests/functionalTests.runsettings'
 
