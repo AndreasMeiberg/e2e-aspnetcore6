@@ -1,4 +1,4 @@
-# Docs: https://docs.microsoft.com/en-us/cli/azure/repos/policy/approver-count?view=azure-cli-latest&WT.mc_id=DOP-MVP-21138
+# Docs: https://docs.microsoft.com/en-us/cli/azure/repos/policy?WT.mc_id=DOP-MVP-21138
 
 $repoId = $env:BUILD_REPOSITORY_ID
 $branch = 'refs/heads/main'
