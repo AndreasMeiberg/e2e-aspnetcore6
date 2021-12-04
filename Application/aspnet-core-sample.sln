@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnet-core-sample", "aspnet-core-sample\aspnet-core-sample.csproj", "{64AEB7CF-C002-42EF-89C3-D9DBED588343}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-core-sample", "aspnet-core-sample\aspnet-core-sample.csproj", "{64AEB7CF-C002-42EF-89C3-D9DBED588343}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F0C59EDD-7DE7-4437-8EE3-DD5F6E2BAB4D}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\README.md = ..\..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnet-core-sample.UnitTests", "aspnet-core-sample.UnitTests\aspnet-core-sample.UnitTests.csproj", "{8A807894-40F5-4B43-A7B7-D5A99AB9AC00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-core-sample.UnitTests", "aspnet-core-sample.UnitTests\aspnet-core-sample.UnitTests.csproj", "{8A807894-40F5-4B43-A7B7-D5A99AB9AC00}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-core-sample.FunctionalTests", "aspnet-core-sample.FunctionalTests\aspnet-core-sample.FunctionalTests.csproj", "{138224C9-7B67-4C26-9514-D0080DA0DA9F}"
 EndProject
