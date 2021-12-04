@@ -16,11 +16,13 @@
    BuildDatabase
    EnsureTests
  end
- EnsureTests -->|trigger| DeployJob
- DeployJob -->|depends on| FunctionalTests
+ EnsureTests -->|trigger| DeployInfra
+ DeployInfra -->|depends on| DeployWebApp
+ DeployWebApp -->|depends on| FunctionalTests
  subgraph "deploy.yml"
    subgraph "dev stage"
-     DeployJob
+     DeployInfra
+     DeployWebApp
      FunctionalTests
   end
  end
