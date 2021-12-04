@@ -1,14 +1,18 @@
 trigger: none
 
 parameters:
-- name: agentPool
-  displayName: 'Enter agent pool to run'
-  type: object
-  default:
-    name: Default
+- name: agentType
+  displayName: 'Choose agent to run pipeline'
+  default: 'on-prem'
+  values:
+  - 'cloud'
+  - 'on-prem'
 
 pool:
-  ${{ parameters.agentPool }}
+  ${{ if eq(parameters.agentType, 'on-prem') }}:
+    name: 'Default'
+  ${{ if eq(parameters.agentType, 'cloud') }}:
+    vmImage: 'ubuntu-latest'
 
 steps:
 - powershell: | 
