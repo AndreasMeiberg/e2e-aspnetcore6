@@ -5,7 +5,7 @@ $branch = 'refs/heads/main'
 
 # Approver count policy
 az repos policy approver-count create `
-  --repository-id $repo `
+  --repository-id $repoId `
   --branch $branch `
   --enabled true `
   --blocking true `
