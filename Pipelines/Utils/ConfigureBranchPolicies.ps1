@@ -1,4 +1,6 @@
-# Docs: https://docs.microsoft.com/en-us/cli/azure/repos/policy?WT.mc_id=DOP-MVP-21138
+# File     : ConfigureBranchPolicies.ps1
+# Docs     : https://docs.microsoft.com/en-us/cli/azure/repos/policy?WT.mc_id=DOP-MVP-21138
+# Requires : "Edit Policies" permission on the branch
 
 $repoId = $env:BUILD_REPOSITORY_ID
 $branch = 'refs/heads/main'
