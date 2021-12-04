@@ -1,0 +1,11 @@
+trigger: none
+
+steps:
+- powershell: | 
+    az --version
+    az extension add --name azure-devops
+    az devops configure --defaults organization=$(System.TeamFoundationCollectionUri) project=$(System.TeamProject)
+    ./Utils/ConfigureBranchPolicies.ps1
+  displayName: 'Run ConfigureBranchPolicies.ps1'
+  env:
+    AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
