@@ -7,9 +7,9 @@ $branch = 'refs/head/main'
 az repos policy approver-count create `
   --repository-id $repo `
   --branch $branch `
-  --enabled:true `
-  --blocking:true `
-  --minimum-approver-count:1 `
-  --creator-vote-counts:true `
-  --reset-on-source-push:true `
-  --allow-downvotes:true
+  --enabled true `
+  --blocking true `
+  --minimum-approver-count 1 `
+  --creator-vote-counts true `
+  --reset-on-source-push true `
+  --allow-downvotes true
