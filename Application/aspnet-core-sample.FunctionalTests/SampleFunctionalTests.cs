@@ -67,13 +67,13 @@ namespace aspnet_core_sample.FunctionalTests
                     {
                         throw;
                     }
-                    TestContext.WriteLine($"Error occured ({ex.Message.ToString()}). Will retry in 5 seconds.");
+                    TestContext.WriteLine($"Error occured ({ex.Message}). Will retry in 5 seconds.");
                     Thread.Sleep(5000);
                 }
             }
         }
 
-        private RemoteWebDriver GetChromeDriver()
+        private static RemoteWebDriver GetChromeDriver()
         {
             var path = Environment.GetEnvironmentVariable("ChromeWebDriver");
             var options = new ChromeOptions();
