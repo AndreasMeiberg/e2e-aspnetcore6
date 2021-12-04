@@ -12,8 +12,6 @@ namespace aspnet_core_sample.FunctionalTests
         private static TestContext testContext;
         private WebDriver driver;
 
-        public TestContext TestContext { get; set; }
-
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
@@ -30,6 +28,11 @@ namespace aspnet_core_sample.FunctionalTests
         [TestCleanup]
         public void TestClean()
         {
+            if (testContext.CurrentTestOutcome != UnitTestOutcome.Passed)
+            {
+                TakeScreenshot(driver, @"Test-Failed.png");
+            }
+
             driver.Quit();
         }
 
@@ -48,15 +51,14 @@ namespace aspnet_core_sample.FunctionalTests
             {
                 try
                 {
-                    driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
-                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                    ConfigureTimeouts(driver);
 
+                    testContext.WriteLine("Navigating to URL: " + webAppUrl);
                     driver.Navigate().GoToUrl(webAppUrl);
+                    testContext.WriteLine($"Page title is: {driver.Title} ({driver.Title.Length} chars)");
                     Assert.AreEqual(expectedTitle, driver.Title, $"Expected title to be '{expectedTitle}'");
 
-                    ((OpenQA.Selenium.ITakesScreenshot)driver).GetScreenshot().SaveAsFile(@"Screenshot.png", OpenQA.Selenium.ScreenshotImageFormat.Png);
-
-                    testContext.AddResultFile(@"Screenshot.png");
+                    TakeScreenshot(driver, @"Screenshot.png");
 
                     break;
                 }
@@ -67,7 +69,7 @@ namespace aspnet_core_sample.FunctionalTests
                     {
                         throw;
                     }
-                    TestContext.WriteLine($"Error occured ({ex.Message}). Will retry in 5 seconds.");
+                    testContext.WriteLine($"Error occured ({ex.Message}). Will retry in 5 seconds.");
                     Thread.Sleep(5000);
                 }
             }
@@ -87,6 +89,19 @@ namespace aspnet_core_sample.FunctionalTests
             {
                 return new ChromeDriver(options);
             }
+        }
+
+        private static void ConfigureTimeouts(WebDriver driver)
+        {
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        }
+
+        private static void TakeScreenshot(WebDriver driver, string filename)
+        {
+            ((OpenQA.Selenium.ITakesScreenshot)driver).GetScreenshot().SaveAsFile(filename, OpenQA.Selenium.ScreenshotImageFormat.Png);
+
+            testContext.AddResultFile(@filename);
         }
     }
 }
