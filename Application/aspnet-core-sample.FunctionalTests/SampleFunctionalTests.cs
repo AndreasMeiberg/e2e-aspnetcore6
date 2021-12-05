@@ -30,7 +30,7 @@ namespace aspnet_core_sample.FunctionalTests
         {
             if (testContext.CurrentTestOutcome != UnitTestOutcome.Passed)
             {
-                TakeScreenshot(driver, @"Test-Failed.png");
+                TakeScreenshot(driver, @"Test-Failed");
             }
 
             driver.Quit();
@@ -58,7 +58,7 @@ namespace aspnet_core_sample.FunctionalTests
                     testContext.WriteLine($"Page title is: {driver.Title} ({driver.Title.Length} chars)");
                     Assert.AreEqual(expectedTitle, driver.Title, $"Expected title to be '{expectedTitle}'");
 
-                    TakeScreenshot(driver, @"Screenshot.png");
+                    TakeScreenshot(driver, @"Screenshot");
 
                     break;
                 }
@@ -97,11 +97,11 @@ namespace aspnet_core_sample.FunctionalTests
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
-        private static void TakeScreenshot(WebDriver driver, string filename)
+        private static void TakeScreenshot(WebDriver driver, string title = "Screenshot")
         {
-            ((OpenQA.Selenium.ITakesScreenshot)driver).GetScreenshot().SaveAsFile(filename, OpenQA.Selenium.ScreenshotImageFormat.Png);
-
-            testContext.AddResultFile(@filename);
+            string screenshotFile = System.IO.Path.Combine(testContext.TestResultsDirectory, title + ".png");
+            ((OpenQA.Selenium.ITakesScreenshot)driver).GetScreenshot().SaveAsFile(screenshotFile, OpenQA.Selenium.ScreenshotImageFormat.Png);
+            testContext.AddResultFile(screenshotFile);
         }
     }
 }
