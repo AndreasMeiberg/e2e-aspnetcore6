@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-core-sample", "aspne
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F0C59EDD-7DE7-4437-8EE3-DD5F6E2BAB4D}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\README.md = ..\..\README.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-core-sample.UnitTests", "aspnet-core-sample.UnitTests\aspnet-core-sample.UnitTests.csproj", "{8A807894-40F5-4B43-A7B7-D5A99AB9AC00}"
