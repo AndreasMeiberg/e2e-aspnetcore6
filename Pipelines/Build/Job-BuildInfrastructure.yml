@@ -32,7 +32,7 @@ jobs:
   - task: AzureCLI@2
     displayName: 'az bicep build'
     inputs:
-      azureSubscription: 'Azure Subscription'
+      azureSubscription: ${{ parameters.azureSubscription }}
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
