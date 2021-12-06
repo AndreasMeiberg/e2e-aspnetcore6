@@ -12,7 +12,8 @@ jobs:
   displayName: 'Deploy Azure Resources'
 
   pool:
-    name: default
+    vmImage: ubuntu-latest
+    #name: default
 
   variables:
     armTemplateFile: '$(Pipeline.Workspace)/CI/ArmTemplate/azuredeploy.json'
